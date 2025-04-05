@@ -4,19 +4,16 @@ const { Server } = require("socket.io");
 const cors = require("cors");
 
 const app = express();
-app.use(cors());
-
 const server = http.createServer(app);
+
 const io = new Server(server, {
   cors: {
-    origin: "*", // hoặc bạn để domain frontend của bạn
-    methods: ["GET", "POST"]
-  }
+    origin: "*", // nên thay bằng domain cụ thể nếu public
+    methods: ["GET", "POST"],
+  },
 });
 
-app.get("/", (req, res) => {
-  res.send("Socket server is running!");
-});
+app.use(cors());
 
 io.on("connection", (socket) => {
     console.log("🟢 Client connected:", socket.id);
